@@ -1,0 +1,117 @@
+
+2024-06-13T15:41:13.898958
+================================ System Message ================================
+
+You will get information about a codebase that is currently on disk in the current folder.
+The user will ask you to write a script that runs the code in a specific way.
+You will answer with code blocks that include all the necessary terminal commands.
+Do not install globally. Do not use sudo.
+Do not explain the code, just give the commands.
+Do not use placeholders, use example values (like . for a folder argument) if necessary.
+
+
+================================ Human Message =================================
+
+
+        Make a unix script that
+        a) installs dependencies
+        b) runs all necessary parts of the codebase (in parallel if necessary)
+        
+Information about the codebase:
+
+```
+File: Structure
+1 /home/user/app/
+2 config/
+3 __init__.py
+4 config.py
+5 models/
+6 __init__.py
+7 user.py
+8 repositories/
+9 __init__.py
+10 user_repository.py
+11 services/
+12 __init__.py
+13 user_service.py
+14 utils/
+15 __init__.py
+16 utils.py
+17 __init__.py
+18 app.py
+19 requirements.txt
+
+File: config/config.py
+1 class Config:
+2     """Application configuration"""
+3     DEBUG = True
+4     SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
+
+File: models/user.py
+1 from dataclasses import dataclass
+2 
+3 @dataclass
+4 class User:
+5     """User model"""
+6     id: int
+7     name: str
+8     email: str
+
+File: repositories/user_repository.py
+1 from models.user import User
+2 
+3 class UserRepository:
+4     """User repository"""
+5     def get_all_users(self):
+6         # TO DO: implement database connection and query
+7         return [User(id=1, name='John Doe', email='john@example.com')]
+
+File: services/user_service.py
+1 from repositories.user_repository import UserRepository
+2 
+3 class UserService:
+4     """User service"""
+5     def __init__(self):
+6         self.repository = UserRepository()
+7 
+8     def get_all_users(self):
+9         return self.repository.get_all_users()
+
+File: utils/utils.py
+1 def hello_world():
+2     """Prints hello world"""
+3     print("Hello World!")
+
+File: app.py
+1 from services.user_service import UserService
+2 from utils.utils import hello_world
+3 
+4 def main():
+5     hello_world()
+6     user_service = UserService()
+7     users = user_service.get_all_users()
+8     for user in users:
+9         print(user)
+10 
+11 if __name__ == '__main__':
+12     main()
+
+File: requirements.txt
+1 SQLAlchemy==1.4.25
+2 pytest==6.2.5
+3 dataclasses==0.8
+
+```
+
+================================== Ai Message ==================================
+
+Here is the Unix script that installs dependencies and runs the codebase:
+```
+#!/bin/bash
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the application
+python app.py
+```
